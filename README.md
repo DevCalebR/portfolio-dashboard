@@ -1,5 +1,8 @@
 # Portfolio Dashboard
 
+Live Demo: https://REPLACE_ME.netlify.app
+GitHub: https://github.com/DevCalebR/portfolio-dashboard
+
 A portfolio-grade dashboard skeleton for strategy/backtest workflows built with Vite + React + TypeScript.
 
 It demonstrates three core product surfaces:
@@ -79,6 +82,21 @@ npm run build
 ```bash
 npm test
 ```
+
+## Deploy to Netlify
+
+Use these Netlify settings:
+- Build command: `npm run build`
+- Publish directory: `dist`
+- Node version: `20+`
+
+SPA routing is configured via `public/_redirects` with:
+
+```text
+/* /index.html 200
+```
+
+That file is copied into `dist/_redirects` during build so direct route visits (for example `/runs/123`) resolve correctly on Netlify.
 
 ## Project Structure
 
