@@ -32,15 +32,17 @@ It demonstrates three core product surfaces:
 
 ## Screenshots
 
-Programmatic screenshot capture is not configured in this repo yet.
+### Runs Table
 
-Place screenshots in `docs/screenshots/` using these filenames:
-- `runs-table.png`
-- `new-run-form.png`
-- `run-detail-charts.png`
-- `dashboard.png` (optional)
+![Runs table](docs/screenshots/runs.png)
 
-TODO placeholders and capture steps are in `docs/screenshots/README.md`.
+### New Run Form
+
+![New run form](docs/screenshots/new-run.png)
+
+### Run Detail
+
+![Run detail charts](docs/screenshots/run-detail.png)
 
 ## Tech Stack
 
