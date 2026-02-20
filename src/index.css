@@ -668,3 +668,77 @@ code {
     align-items: flex-start;
   }
 }
+
+.page--loading {
+  padding-top: 0.6rem;
+}
+
+.dashboard-about-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--text-muted);
+  display: grid;
+  gap: 0.38rem;
+}
+
+.ui-field__helper {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.runs-status-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.runs-status-legend__label {
+  color: var(--text-muted);
+  font-size: 0.79rem;
+  font-weight: 700;
+}
+
+.runs-status-legend__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+:where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    [role='button'],
+    [role='link'],
+    [tabindex]:not([tabindex='-1'])
+  ):focus-visible {
+  outline: 3px solid rgba(18, 104, 94, 0.38);
+  outline-offset: 2px;
+}
+
+.side-nav__link:focus-visible,
+.ui-button:focus-visible,
+.runs-table__sort-button:focus-visible,
+.runs-table__row:focus-visible {
+  outline-offset: 1px;
+}
+
+.ui-input:focus-visible,
+.ui-select:focus-visible {
+  outline: 3px solid rgba(18, 104, 94, 0.28);
+  outline-offset: 0;
+  border-color: #18766b;
+}
+
+.runs-table__row:focus-visible {
+  background: #eef6fd;
+}
+
+@media (max-width: 860px) {
+  .runs-status-legend {
+    margin-top: 0.65rem;
+  }
+}

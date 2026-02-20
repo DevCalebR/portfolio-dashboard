@@ -30,6 +30,18 @@ export function DashboardPage() {
 
       <section className="card-grid card-grid--two">
         <Card
+          actions={<Badge variant="success">About</Badge>}
+          subtitle="This skeleton is designed for portfolio-grade workflows."
+          title="What This App Demonstrates"
+        >
+          <ul className="dashboard-about-list">
+            <li>Runs table with URL-synced state for search, filter, sort, and page.</li>
+            <li>Validated run creation form with reusable presets and safe defaults.</li>
+            <li>Run detail metrics plus lazily loaded chart modules.</li>
+          </ul>
+        </Card>
+
+        <Card
           actions={<Badge variant="warning">Placeholder</Badge>}
           subtitle="No analytics pipeline is connected yet."
           title="Performance Curve"

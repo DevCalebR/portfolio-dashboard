@@ -96,8 +96,12 @@ function sortRuns(runs: Run[], sortBy: RunSortBy, sortDir: RunSortDir): Run[] {
 }
 
 function shouldFailRequest(forceError?: boolean, allowRandomError = true): boolean {
-  if (forceError) {
+  if (forceError === true) {
     return true
+  }
+
+  if (forceError === false) {
+    return false
   }
 
   if (!allowRandomError) {

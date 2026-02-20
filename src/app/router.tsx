@@ -1,10 +1,41 @@
+import { lazy, Suspense, type ReactElement } from 'react'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 import { AppLayout } from '../components/layout/AppLayout'
-import { DashboardPage } from '../pages/DashboardPage'
-import { NewRunPage } from '../pages/NewRunPage'
-import { NotFoundPage } from '../pages/NotFoundPage'
-import { RunDetailPage } from '../pages/RunDetailPage'
-import { RunsPage } from '../pages/RunsPage'
+import { RouteLoadingState } from './RouteLoadingState'
+
+const DashboardPage = lazy(() =>
+  import('../pages/DashboardPage').then((module) => ({
+    default: module.DashboardPage,
+  })),
+)
+
+const RunsPage = lazy(() =>
+  import('../pages/RunsPage').then((module) => ({
+    default: module.RunsPage,
+  })),
+)
+
+const NewRunPage = lazy(() =>
+  import('../pages/NewRunPage').then((module) => ({
+    default: module.NewRunPage,
+  })),
+)
+
+const RunDetailPage = lazy(() =>
+  import('../pages/RunDetailPage').then((module) => ({
+    default: module.RunDetailPage,
+  })),
+)
+
+const NotFoundPage = lazy(() =>
+  import('../pages/NotFoundPage').then((module) => ({
+    default: module.NotFoundPage,
+  })),
+)
+
+function withRouteFallback(element: ReactElement): ReactElement {
+  return <Suspense fallback={<RouteLoadingState />}>{element}</Suspense>
+}
 
 export const router = createBrowserRouter([
   {
@@ -17,23 +48,23 @@ export const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <DashboardPage />,
+        element: withRouteFallback(<DashboardPage />),
       },
       {
         path: 'runs',
-        element: <RunsPage />,
+        element: withRouteFallback(<RunsPage />),
       },
       {
         path: 'runs/new',
-        element: <NewRunPage />,
+        element: withRouteFallback(<NewRunPage />),
       },
       {
         path: 'runs/:id',
-        element: <RunDetailPage />,
+        element: withRouteFallback(<RunDetailPage />),
       },
       {
         path: '*',
-        element: <NotFoundPage />,
+        element: withRouteFallback(<NotFoundPage />),
       },
     ],
   },

@@ -15,139 +15,44 @@ import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
 import { Select } from '../components/ui/Select'
+import {
+  createRunsSearchParams,
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_SORT_BY,
+  DEFAULT_SORT_DIR,
+  DEFAULT_STATUS,
+  PAGE_SIZE_OPTIONS,
+  parseRunsQueryState,
+  type RunsQueryState,
+} from '../features/runs/queryState'
 import { listRuns } from '../features/runs/mockApi'
 import type {
   ListRunsResult,
   Run,
   RunSortBy,
-  RunSortDir,
   RunStatus,
 } from '../features/runs/types'
 import { formatDate, formatNumber, formatPercent } from '../lib/format'
 
 type LoadState = 'error' | 'loading' | 'success'
-type StatusFilter = RunStatus | 'all'
 
-interface TableQueryState {
-  page: number
-  pageSize: number
-  query: string
-  sortBy: RunSortBy
-  sortDir: RunSortDir
-  status: StatusFilter
+function isRunSortBy(value: string | null): value is RunSortBy {
+  return (
+    value === 'createdAt' ||
+    value === 'maxDD' ||
+    value === 'pf' ||
+    value === 'trades'
+  )
 }
 
-const DEFAULT_PAGE = 1
-const DEFAULT_PAGE_SIZE = 10
-const DEFAULT_SORT_BY: RunSortBy = 'createdAt'
-const DEFAULT_SORT_DIR: RunSortDir = 'desc'
-const DEFAULT_STATUS: StatusFilter = 'all'
-const DEFAULT_SORT_TOKEN = `${DEFAULT_SORT_BY}:${DEFAULT_SORT_DIR}`
-const PAGE_SIZE_OPTIONS = [10, 20, 50] as const
-
-function isRunStatus(value: string | null): value is RunStatus {
+function isRunStatus(value: string): value is RunStatus {
   return (
     value === 'done' ||
     value === 'failed' ||
     value === 'queued' ||
     value === 'running'
   )
-}
-
-function isRunSortBy(value: string | null): value is RunSortBy {
-  return value === 'createdAt' || value === 'maxDD' || value === 'pf' || value === 'trades'
-}
-
-function isRunSortDir(value: string | null): value is RunSortDir {
-  return value === 'asc' || value === 'desc'
-}
-
-function parsePositiveInt(value: string | null, fallback: number): number {
-  if (!value) {
-    return fallback
-  }
-
-  const parsed = Number.parseInt(value, 10)
-
-  if (Number.isNaN(parsed) || parsed < 1) {
-    return fallback
-  }
-
-  return parsed
-}
-
-function parseSortToken(token: string | null): {
-  sortBy: RunSortBy
-  sortDir: RunSortDir
-} {
-  if (!token) {
-    return {
-      sortBy: DEFAULT_SORT_BY,
-      sortDir: DEFAULT_SORT_DIR,
-    }
-  }
-
-  const [sortByToken, sortDirToken] = token.split(':')
-
-  if (!isRunSortBy(sortByToken) || !isRunSortDir(sortDirToken)) {
-    return {
-      sortBy: DEFAULT_SORT_BY,
-      sortDir: DEFAULT_SORT_DIR,
-    }
-  }
-
-  return {
-    sortBy: sortByToken,
-    sortDir: sortDirToken,
-  }
-}
-
-function parseTableQueryState(searchParams: URLSearchParams): TableQueryState {
-  const parsedStatus = searchParams.get('status')
-  const parsedSort = parseSortToken(searchParams.get('sort'))
-  const parsedPageSize = parsePositiveInt(
-    searchParams.get('pageSize'),
-    DEFAULT_PAGE_SIZE,
-  )
-
-  return {
-    page: parsePositiveInt(searchParams.get('page'), DEFAULT_PAGE),
-    pageSize: PAGE_SIZE_OPTIONS.includes(parsedPageSize as 10 | 20 | 50)
-      ? parsedPageSize
-      : DEFAULT_PAGE_SIZE,
-    query: searchParams.get('query') ?? '',
-    sortBy: parsedSort.sortBy,
-    sortDir: parsedSort.sortDir,
-    status: isRunStatus(parsedStatus) ? parsedStatus : DEFAULT_STATUS,
-  }
-}
-
-function createSearchParamsFromState(state: TableQueryState): URLSearchParams {
-  const next = new URLSearchParams()
-  const trimmedQuery = state.query.trim()
-  const sortToken = `${state.sortBy}:${state.sortDir}`
-
-  if (trimmedQuery) {
-    next.set('query', trimmedQuery)
-  }
-
-  if (state.status !== DEFAULT_STATUS) {
-    next.set('status', state.status)
-  }
-
-  if (sortToken !== DEFAULT_SORT_TOKEN) {
-    next.set('sort', sortToken)
-  }
-
-  if (state.page !== DEFAULT_PAGE) {
-    next.set('page', String(state.page))
-  }
-
-  if (state.pageSize !== DEFAULT_PAGE_SIZE) {
-    next.set('pageSize', String(state.pageSize))
-  }
-
-  return next
 }
 
 function statusBadgeVariant(
@@ -179,6 +84,9 @@ function SortableHeader({
 
   return (
     <button
+      aria-label={`Sort by ${label}${
+        sorting === 'asc' ? ', currently ascending' : sorting === 'desc' ? ', currently descending' : ''
+      }`}
       className="runs-table__sort-button"
       onClick={column.getToggleSortingHandler()}
       type="button"
@@ -242,11 +150,18 @@ const columns: ColumnDef<Run>[] = [
   },
 ]
 
+const statusLegend: Array<{ label: RunStatus; tone: 'danger' | 'neutral' | 'success' | 'warning' }> = [
+  { label: 'done', tone: 'success' },
+  { label: 'running', tone: 'warning' },
+  { label: 'queued', tone: 'neutral' },
+  { label: 'failed', tone: 'danger' },
+]
+
 export function RunsPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const tableQueryState = useMemo(
-    () => parseTableQueryState(searchParams),
+    () => parseRunsQueryState(searchParams),
     [searchParams],
   )
 
@@ -261,8 +176,8 @@ export function RunsPage() {
   })
 
   const setTableQueryState = useCallback(
-    (nextState: TableQueryState, replace = false) => {
-      setSearchParams(createSearchParamsFromState(nextState), { replace })
+    (nextState: RunsQueryState, replace = false) => {
+      setSearchParams(createRunsSearchParams(nextState), { replace })
     },
     [setSearchParams],
   )
@@ -395,6 +310,8 @@ export function RunsPage() {
         <div className="runs-controls">
           <div className="runs-controls__field">
             <Input
+              aria-label="Search runs"
+              helperText="Matches pair, timeframe, and status values."
               label="Global Search"
               onChange={(event) => {
                 setTableQueryState({
@@ -410,6 +327,7 @@ export function RunsPage() {
 
           <div className="runs-controls__field">
             <Select
+              aria-label="Filter runs by status"
               label="Status"
               onChange={(event) => {
                 const selectedStatus = event.currentTarget.value
@@ -433,6 +351,8 @@ export function RunsPage() {
 
           <div className="runs-controls__field">
             <Select
+              aria-label="Select page size"
+              helperText="Controls number of rows shown per page."
               label="Page Size"
               onChange={(event) => {
                 const nextPageSize = Number.parseInt(event.currentTarget.value, 10)
@@ -456,15 +376,30 @@ export function RunsPage() {
           </div>
         </div>
 
+        <div className="runs-status-legend" aria-label="Status legend">
+          <span className="runs-status-legend__label">Status Legend:</span>
+          {statusLegend.map((entry) => (
+            <div className="runs-status-legend__item" key={entry.label}>
+              <Badge variant={entry.tone}>{entry.label}</Badge>
+            </div>
+          ))}
+        </div>
+
         {isRefreshing ? (
-          <p className="runs-loading-inline">Refreshing run results...</p>
+          <p className="runs-loading-inline" role="status">
+            Refreshing run results...
+          </p>
         ) : null}
       </Card>
 
       {loadState === 'error' ? (
         <div className="runs-error-banner" role="alert">
           <span>{errorMessage}</span>
-          <Button onClick={() => setRefreshTick((value) => value + 1)} variant="secondary">
+          <Button
+            aria-label="Retry loading runs"
+            onClick={() => setRefreshTick((value) => value + 1)}
+            variant="secondary"
+          >
             Retry
           </Button>
         </div>
@@ -481,6 +416,11 @@ export function RunsPage() {
           <p className="state-text">
             No rows match your current query and filters.
           </p>
+          <div className="state-card__actions">
+            <Link className="ui-button ui-button--secondary" to="/runs/new">
+              Create New Run
+            </Link>
+          </div>
         </Card>
       ) : null}
 
@@ -495,7 +435,7 @@ export function RunsPage() {
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
-                      <th key={header.id}>
+                      <th key={header.id} scope="col">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -510,6 +450,7 @@ export function RunsPage() {
               <tbody>
                 {table.getRowModel().rows.map((row) => (
                   <tr
+                    aria-label={`Open details for ${row.original.id}`}
                     className="runs-table__row"
                     key={row.id}
                     onClick={() => {
@@ -537,6 +478,7 @@ export function RunsPage() {
 
           <div className="runs-pagination">
             <Button
+              aria-label="Go to previous page"
               disabled={tableQueryState.page <= 1 || loadState === 'loading'}
               onClick={() => {
                 setTableQueryState({
@@ -554,6 +496,7 @@ export function RunsPage() {
             </p>
 
             <Button
+              aria-label="Go to next page"
               disabled={tableQueryState.page >= totalPages || loadState === 'loading'}
               onClick={() => {
                 setTableQueryState({

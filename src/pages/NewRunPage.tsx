@@ -245,6 +245,8 @@ export function NewRunPage() {
         <form className="new-run-form" onSubmit={onSubmit}>
           <div className="new-run-form__preset">
             <Select
+              helperText="Preset fills all fields; adjust values before submitting."
+              id="runPreset"
               label="Preset"
               onChange={(event) => {
                 applyPreset(event.currentTarget.value)
@@ -263,6 +265,7 @@ export function NewRunPage() {
           <Select
             disabled={isSubmitting}
             error={errors.pair?.message}
+            helperText="Choose the market symbol to backtest."
             label="Pair"
             {...register('pair')}
           >
@@ -276,6 +279,7 @@ export function NewRunPage() {
           <Select
             disabled={isSubmitting}
             error={errors.timeframe?.message}
+            helperText="Lower timeframe usually means more trades."
             label="Timeframe"
             {...register('timeframe')}
           >
@@ -289,6 +293,7 @@ export function NewRunPage() {
           <Input
             disabled={isSubmitting}
             error={errors.startDate?.message}
+            helperText="Start of historical window."
             label="Start Date"
             type="date"
             {...register('startDate')}
@@ -297,6 +302,7 @@ export function NewRunPage() {
           <Input
             disabled={isSubmitting}
             error={errors.endDate?.message}
+            helperText="Must be later than start date."
             label="End Date"
             type="date"
             {...register('endDate')}
@@ -305,6 +311,7 @@ export function NewRunPage() {
           <Input
             disabled={isSubmitting}
             error={errors.riskPct?.message}
+            helperText="Risk per trade as percent of equity (0.1 to 2.0)."
             label="Risk %"
             max="2"
             min="0.1"
@@ -316,6 +323,7 @@ export function NewRunPage() {
           <Select
             disabled={isSubmitting}
             error={errors.strategy?.message}
+            helperText="Execution profile used by the run model."
             label="Strategy"
             {...register('strategy')}
           >
@@ -331,7 +339,9 @@ export function NewRunPage() {
               {isSubmitting ? 'Creating...' : 'Create Run'}
             </Button>
             {isSubmitting ? (
-              <span className="form-inline-note">Creating run in mock API...</span>
+              <span className="form-inline-note" role="status">
+                Creating run in mock API...
+              </span>
             ) : null}
           </div>
 

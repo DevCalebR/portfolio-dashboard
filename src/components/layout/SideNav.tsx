@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom'
 
 const navItems = [
-  { label: 'Dashboard', to: '/dashboard' },
-  { label: 'Runs', to: '/runs' },
-  { label: 'Create Run', to: '/runs/new' },
+  { end: true, label: 'Dashboard', to: '/dashboard' },
+  { end: true, label: 'Runs', to: '/runs' },
+  { end: true, label: 'Create Run', to: '/runs/new' },
 ]
 
 export function SideNav() {
@@ -24,6 +24,7 @@ export function SideNav() {
                 className={({ isActive }) =>
                   `side-nav__link${isActive ? ' is-active' : ''}`
                 }
+                end={item.end}
                 to={item.to}
               >
                 {item.label}
