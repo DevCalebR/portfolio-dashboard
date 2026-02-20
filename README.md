@@ -1,73 +1,136 @@
-# React + TypeScript + Vite
+# Portfolio Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A portfolio-grade dashboard skeleton for strategy/backtest workflows built with Vite + React + TypeScript.
 
-Currently, two official plugins are available:
+It demonstrates three core product surfaces:
+- Interactive runs table with URL-synced state.
+- Validated run creation form with presets.
+- Run detail metrics with lazily loaded charts.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Routing and layout
+  - Sidebar + top bar app shell
+  - Routes: `/dashboard`, `/runs`, `/runs/new`, `/runs/:id`, `404`
+- Runs table
+  - TanStack Table integration
+  - Global search, status filter, server-style sorting/pagination
+  - URL query-state persistence (`query`, `status`, `sort`, `page`, `pageSize`)
+  - Loading, empty, and error states with retry
+- New Run form
+  - `react-hook-form` + `zod` validation
+  - 6 presets that auto-fill fields
+  - Inline submit loading/error feedback
+- Run detail
+  - Metric cards (PF, trades, max drawdown, status, date range)
+  - Equity and drawdown charts (`recharts`)
+  - Chart module lazy-loaded with Suspense fallback
+- Accessibility polish
+  - Consistent visible focus styles
+  - Keyboard row navigation on runs table (Enter/Space)
+  - Form helper/error text associated via `aria-describedby`
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Screenshots
 
-## Expanding the ESLint configuration
+Programmatic screenshot capture is not configured in this repo yet.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Place screenshots in `docs/screenshots/` using these filenames:
+- `runs-table.png`
+- `new-run-form.png`
+- `run-detail-charts.png`
+- `dashboard.png` (optional)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+TODO placeholders and capture steps are in `docs/screenshots/README.md`.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- React 19
+- TypeScript
+- Vite (react-swc-ts)
+- React Router
+- TanStack Table
+- React Hook Form + Zod
+- Recharts
+
+## Getting Started
+
+### 1. Install
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Run dev server
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### 3. Build
+
+```bash
+npm run build
+```
+
+### 4. Run lightweight tests
+
+```bash
+npm test
+```
+
+## Project Structure
+
+```text
+src/
+  app/
+    router.tsx
+    RouteLoadingState.tsx
+  components/
+    layout/
+      AppLayout.tsx
+      SideNav.tsx
+      TopNav.tsx
+    ui/
+      Badge.tsx
+      Button.tsx
+      Card.tsx
+      Input.tsx
+      Select.tsx
+  features/
+    runs/
+      components/
+        RunDetailCharts.tsx
+      mockApi.ts
+      mockData.ts
+      queryState.ts
+      types.ts
+  lib/
+    format.ts
+  pages/
+    DashboardPage.tsx
+    RunsPage.tsx
+    NewRunPage.tsx
+    RunDetailPage.tsx
+    NotFoundPage.tsx
+scripts/
+  run-tests.mjs
+docs/
+  screenshots/
+```
+
+## Testing Notes
+
+`npm test` runs a lightweight Node script (no extra test framework) that validates:
+- `listRuns` filtering/sorting/pagination behavior.
+- URL query parsing sanitizes invalid params to defaults.
+
+## Performance Notes
+
+Route-level lazy loading is enabled and the heavy run-detail chart module is split into its own chunk.
+
+## Roadmap
+
+- Server/API integration for runs and analytics.
+- Debounced search and richer column filters.
+- More chart drill-downs and benchmark overlays.
+- End-to-end tests for critical flows.
