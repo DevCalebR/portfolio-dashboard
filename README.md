@@ -1,37 +1,18 @@
 # Portfolio Dashboard
 
-Live Demo: https://REPLACE_ME.netlify.app
+Live Demo: https://portfoliodashboardproject.netlify.app
 GitHub: https://github.com/DevCalebR/portfolio-dashboard
 
-A portfolio-grade dashboard skeleton for strategy/backtest workflows built with Vite + React + TypeScript.
+Project summary: Portfolio Dashboard is a Vite + React + TypeScript SPA for backtest research workflows. It combines URL-synced run exploration, validated run creation, and chart-based run analysis in a clean, accessible interface.
 
-It demonstrates three core product surfaces:
-- Interactive runs table with URL-synced state.
-- Validated run creation form with presets.
-- Run detail metrics with lazily loaded charts.
+## Key Features
 
-## Features
-
-- Routing and layout
-  - Sidebar + top bar app shell
-  - Routes: `/dashboard`, `/runs`, `/runs/new`, `/runs/:id`, `404`
-- Runs table
-  - TanStack Table integration
-  - Global search, status filter, server-style sorting/pagination
-  - URL query-state persistence (`query`, `status`, `sort`, `page`, `pageSize`)
-  - Loading, empty, and error states with retry
-- New Run form
-  - `react-hook-form` + `zod` validation
-  - 6 presets that auto-fill fields
-  - Inline submit loading/error feedback
-- Run detail
-  - Metric cards (PF, trades, max drawdown, status, date range)
-  - Equity and drawdown charts (`recharts`)
-  - Chart module lazy-loaded with Suspense fallback
-- Accessibility polish
-  - Consistent visible focus styles
-  - Keyboard row navigation on runs table (Enter/Space)
-  - Form helper/error text associated via `aria-describedby`
+- URL-synced runs table state with global search, status filter, sorting, and pagination.
+- Interactive runs workflow with loading, empty, and error states plus retry handling.
+- Validated New Run form using React Hook Form + Zod, including reusable presets.
+- Run detail metrics with lazily loaded chart components for code-split performance.
+- Accessibility improvements including visible focus states and keyboard-friendly navigation.
+- Lightweight Node-based tests and production build checks via `npm test` and `npm run build`.
 
 ## Screenshots
 
@@ -49,13 +30,14 @@ It demonstrates three core product surfaces:
 
 ## Tech Stack
 
-- React 19
+- Vite
+- React
 - TypeScript
-- Vite (react-swc-ts)
-- React Router
 - TanStack Table
-- React Hook Form + Zod
+- React Hook Form
+- Zod
 - Recharts
+- React Router
 
 ## Getting Started
 
