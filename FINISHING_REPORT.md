@@ -2,9 +2,9 @@
 
 ## Summary
 
-Portfolio Dashboard is a Vite + React + TypeScript single-page app that showcases a backtest research workflow: dashboard overview, run history table, validated run creation form, and run detail charts. The project is already strong for a portfolio piece (clean UI, route-level code splitting, URL-synced state, mock API behavior, lightweight tests, Netlify SPA redirects), but it is not fully portfolio-ready yet because of a lint-blocking issue, missing `typecheck` script, and a few lingering placeholder/skeleton copy strings.
+Portfolio Dashboard is a Vite + React + TypeScript single-page app that showcases a backtest research workflow: dashboard overview, run history table, validated run creation form, and run detail charts. The project started from a strong portfolio baseline (clean UI, route-level code splitting, URL-synced state, mock API behavior, lightweight tests, Netlify SPA redirects), and this audit pass addressed the remaining low-risk polish blockers.
 
-Current readiness (pre-fix audit): **good foundation, close to portfolio-ready**.
+Current readiness (post-fix audit): **portfolio-ready baseline achieved** (build/test/typecheck pass, lint has no errors and one documented non-blocking warning).
 
 ## Initial Git State (Recorded Before Changes)
 
@@ -339,7 +339,7 @@ Risks / opportunities:
 - No `dangerouslySetInnerHTML` usage observed.
 - Mock API is local in-memory only.
 
-## Portfolio Polish Scorecard (Initial)
+## Portfolio Polish Scorecard (Final)
 
 Scored 0-2 each (max 20).
 
@@ -347,34 +347,34 @@ Scored 0-2 each (max 20).
 - Empty/loading/error states: **2/2** - present on runs list and run detail; route suspense fallback included.
 - Mobile responsiveness: **2/2** - multiple responsive breakpoints in `src/index.css`.
 - Navigation clarity: **2/2** - sidebar + top CTA + clear route labels + 404 page.
-- Content quality: **1/2** - good overall, but placeholder/skeleton wording remains in visible UI/docs.
+- Content quality: **2/2** - placeholder/skeleton wording was replaced with demo/preview language while keeping mock-data disclosure.
 - Data realism: **2/2** - mock data looks plausible and mock status is clearly disclosed.
 - README quality: **2/2** - strong project summary, features, screenshots, stack, setup, deploy notes.
 - Deploy readiness (Netlify settings, redirects): **2/2** - `_redirects` exists and README documents settings.
-- Code cleanliness (lint/format/structure): **1/2** - strong structure, but lint currently fails and dead CSS remains.
+- Code cleanliness (lint/format/structure): **2/2** - lint blocker resolved, typecheck script added, dead CSS removed, and CI checks strengthened.
 - Basic analytics hook readiness (optional): **0/2** - no vendor-neutral analytics/pageview hook scaffold yet.
 
-**Total: 16/20**
+**Total: 18/20**
 
 ## MVP Complete Scope (Smallest Portfolio-Ready Improvements)
 
 ### MUST (blocking)
 
-- Fix lint failure in `src/pages/RunDetailPage.tsx` so `npm run lint` passes.
-- Add `typecheck` script to `package.json` and verify it passes.
-- Remove or rewrite user-facing placeholder/skeleton copy to sound intentional and portfolio-ready.
-- Update `FINISHING_REPORT.md` with final verification outputs and pushed branch status.
+- `DONE` Fix lint failure in `src/pages/RunDetailPage.tsx` so `npm run lint` no longer fails.
+- `DONE` Add `typecheck` script to `package.json` and verify it passes.
+- `DONE` Rewrite user-facing placeholder/skeleton copy to sound intentional and portfolio-ready.
+- `DONE` Update `FINISHING_REPORT.md` with audit findings and final verification outputs.
 
 ### SHOULD
 
-- Add a global route error boundary (`errorElement`) to improve resilience and QA story.
-- Remove clearly unused CSS selectors from `src/index.css`.
-- Update `docs/screenshots/README.md` to match current screenshot filenames and remove TODO wording.
-- Consider adding `lint` + `typecheck` steps to `.github/workflows/ci.yml` for stronger CI signals.
+- `DONE` Add a global route error boundary (`errorElement`) to improve resilience and QA story.
+- `DONE` Remove clearly unused CSS selectors from `src/index.css`.
+- `DONE` Update `docs/screenshots/README.md` to match current screenshot filenames and remove TODO wording.
+- `DONE` Add `lint` + `typecheck` steps to `.github/workflows/ci.yml` for stronger CI signals.
 
 ### COULD (future)
 
-- Replace default Vite favicon (`public/vite.svg`) with project-branded icon.
+- Refine the new default project favicon (`public/pd-mark.svg`) with a final brand asset if you want custom iconography.
 - Add vendor-neutral pageview event hook (`window.dispatchEvent`/custom callback) for easy analytics integration later.
 - Add a lightweight empty dashboard chart demo or “coming next” panel with more concrete copy (still mock-safe).
 - Add visual regression or E2E smoke tests for primary flows.
@@ -383,32 +383,20 @@ Scored 0-2 each (max 20).
 
 ### MUST
 
-1. Fix the `RunDetailPage` lint blocker:
-   - File: `src/pages/RunDetailPage.tsx`
-   - Approach: refactor/suppress the false-positive `react-hooks/set-state-in-effect` issue while preserving loading/error behavior.
-
-2. Add and verify `typecheck`:
-   - File: `package.json`
-   - Add script: `"typecheck": "tsc -b --pretty false"`
-   - Run: `npm run typecheck`
-
-3. Polish visible copy:
-   - Files: `src/pages/DashboardPage.tsx`, `src/pages/NotFoundPage.tsx`, `docs/screenshots/README.md`
-   - Replace “placeholder/skeleton” wording with “preview/demo/mock” phrasing that still honestly signals mocked data.
+1. No remaining blockers for the current portfolio-ready scope.
 
 ### SHOULD
 
-1. Add route-level error handling:
-   - Files: `src/app/router.tsx`, new `src/app/RouteErrorPage.tsx`
-   - Use React Router `errorElement`.
+1. Add vendor-neutral analytics readiness (optional):
+   - Files: `src/components/layout/AppLayout.tsx` or `src/App.tsx`
+   - Emit a route-change event (for example, a `CustomEvent`) that any analytics vendor can subscribe to.
 
-2. Remove dead CSS:
-   - File: `src/index.css`
-   - Delete unused `.runs-table__link`, `.details-grid`, and related media query rules.
+2. Replace demo favicon with final branding (optional):
+   - File: `public/pd-mark.svg`
+   - Swap in a custom SVG icon (same filename to avoid HTML changes).
 
-3. Strengthen CI:
-   - File: `.github/workflows/ci.yml`
-   - Add `npm run lint` and `npm run typecheck` steps after install.
+3. Add E2E smoke coverage (optional but valuable):
+   - Suggested flows: `/runs` table filters, `/runs/new` form validation, `/runs/:id` detail load.
 
 ## Commands To Verify Locally
 
@@ -442,35 +430,96 @@ No blocking inputs are required to complete the low-risk portfolio-ready pass.
 
 Optional improvements Caleb can provide later:
 
-- A custom favicon/logo SVG to replace `public/vite.svg` (if desired for branding).
-- Final project copy/positioning language for dashboard cards if you want the app to reflect a real strategy/system narrative instead of a generic backtest workspace.
+- A final brand favicon/logo SVG to replace `public/pd-mark.svg` (if desired).
+- Final project positioning copy if you want the dashboard cards to reflect a specific trading system/story.
 - Optional analytics vendor choice + site ID (if adding analytics).
 
-## What’s Broken / Missing (Current Audit Snapshot)
+## What’s Broken / Missing (Post-Fix Snapshot)
 
 Blocking:
 
-- `npm run lint` fails due `react-hooks/set-state-in-effect` in `src/pages/RunDetailPage.tsx:75`.
-- `npm run typecheck` script is missing from `package.json`.
+- None found in the audited scope.
 
-Non-blocking quality issues:
+Remaining non-blocking gaps / follow-ups:
 
-- Placeholder/skeleton wording in `src/pages/DashboardPage.tsx` and `src/pages/NotFoundPage.tsx`.
-- `docs/screenshots/README.md` is out of sync with actual screenshot filenames and still reads like a TODO.
-- Unused CSS selectors in `src/index.css`.
-- No global route error boundary.
+- `npm run lint` still reports one warning in `src/pages/RunsPage.tsx:275` (`react-hooks/incompatible-library`) related to TanStack Table + React compiler lint heuristics. This is a warning only and does not fail lint.
+- No vendor-neutral analytics/pageview hook scaffold yet (optional portfolio enhancement).
 
 ## Changes Made by Codex
 
 - `f338347` - Added the initial audit report scaffold with repo inventory, architecture map, verification results, quality findings, scorecard, and MVP scope.
-- Pending current change set: quick-win code and UX polish updates (will append hash after commit/push).
+- `b84cd96` - Applied low-risk portfolio-ready quick wins: added `typecheck` script, strengthened CI (lint/typecheck), added route error boundary, improved copy, updated screenshot docs, added skip link, replaced default favicon, and removed dead CSS.
+- Final report-only commit hash is recorded in the end-of-run `git log` output (self-referential report update limitation).
 
-## Final Verification (To Be Updated After Fixes)
+## Final Verification (After Quick Wins)
 
-Pending.
+Re-run commands completed after the code changes in `b84cd96`.
 
-## End-Of-Run Required Outputs (To Be Updated)
+### `npm run lint` (PASS with warning)
 
-- `git status -sb`: Pending
-- `git log --oneline --decorate -n 20`: Pending
-- Branch sync with origin: Pending
+```text
+> portfolio-dashboard@0.0.0 lint
+> eslint .
+
+/Users/caleb/portfolio-dashboard/src/pages/RunsPage.tsx
+  275:17  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/Users/caleb/portfolio-dashboard/src/pages/RunsPage.tsx:275:17
+  273 |   )
+  274 |
+> 275 |   const table = useReactTable({
+      |                 ^^^^^^^^^^^^^ TanStack Table's `useReactTable()` API returns functions that cannot be memoized safely
+  276 |     columns,
+  277 |     data: result.items,
+  278 |     enableMultiSort: false,  react-hooks/incompatible-library
+
+✖ 1 problem (0 errors, 1 warning)
+```
+
+### `npm run typecheck` (PASS)
+
+```text
+> portfolio-dashboard@0.0.0 typecheck
+> tsc -b --pretty false
+```
+
+### `npm test` (PASS)
+
+```text
+> portfolio-dashboard@0.0.0 test
+> node scripts/run-tests.mjs
+
+All lightweight tests passed.
+```
+
+### `npm run build` (PASS)
+
+```text
+> portfolio-dashboard@0.0.0 build
+> tsc -b && vite build
+
+vite v7.3.1 building client environment for production...
+transforming...
+✓ 780 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                            0.70 kB │ gzip:   0.41 kB
+dist/assets/index-BW8zyjbl.css             9.63 kB │ gzip:   2.67 kB
+dist/assets/Badge-DkC6eOCI.js              0.22 kB │ gzip:   0.19 kB
+dist/assets/NotFoundPage-DzraWY2G.js       0.83 kB │ gzip:   0.42 kB
+dist/assets/Select-BW-SCgJq.js             1.34 kB │ gzip:   0.51 kB
+dist/assets/DashboardPage-Kkb1A3UB.js      2.10 kB │ gzip:   0.95 kB
+dist/assets/RunDetailPage--BwEJONk.js      3.32 kB │ gzip:   1.27 kB
+dist/assets/mockApi-DvTtDspZ.js            5.34 kB │ gzip:   1.96 kB
+dist/assets/RunsPage-B8Qimxlf.js          57.13 kB │ gzip:  15.66 kB
+dist/assets/NewRunPage-2ExAmS54.js        94.93 kB │ gzip:  28.42 kB
+dist/assets/index-C2HW6_Nd.js            288.05 kB │ gzip:  92.44 kB
+dist/assets/RunDetailCharts-DeZZ1FVZ.js  356.07 kB │ gzip: 105.28 kB
+✓ built in 1.22s
+```
+
+## End-Of-Run Required Outputs
+
+Exact terminal outputs are provided in the final Codex response after the last push. They are not embedded here to avoid a self-referential extra commit loop (updating this file would change the final git status/log snapshot).
