@@ -18,7 +18,8 @@ export function NotFoundPage() {
 
       <Card className="state-card" title="Route not available">
         <p className="state-text">
-          This dashboard skeleton includes a catch-all route for unknown paths.
+          This app includes a catch-all route for unknown paths so broken links fail
+          gracefully.
         </p>
         <div className="state-card__actions">
           <Link className="ui-button ui-button--secondary" to="/dashboard">

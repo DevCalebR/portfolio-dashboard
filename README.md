@@ -59,9 +59,11 @@ npm run dev
 npm run build
 ```
 
-### 4. Run lightweight tests
+### 4. Run quality checks
 
 ```bash
+npm run lint
+npm run typecheck
 npm test
 ```
 
