@@ -15,7 +15,7 @@ export function DashboardPage() {
           <p className="page-eyebrow">Overview</p>
           <h2 className="page-title">Dashboard</h2>
           <p className="page-subtitle">
-            Portfolio-level placeholders for KPI, risk, and deployment health.
+            Portfolio-level preview of KPI, risk, and deployment health panels.
           </p>
         </div>
       </header>
@@ -31,7 +31,7 @@ export function DashboardPage() {
       <section className="card-grid card-grid--two">
         <Card
           actions={<Badge variant="success">About</Badge>}
-          subtitle="This skeleton is designed for portfolio-grade workflows."
+          subtitle="This demo layout highlights the core workflows shipped in the app."
           title="What This App Demonstrates"
         >
           <ul className="dashboard-about-list">
@@ -42,24 +42,24 @@ export function DashboardPage() {
         </Card>
 
         <Card
-          actions={<Badge variant="warning">Placeholder</Badge>}
+          actions={<Badge variant="warning">Preview</Badge>}
           subtitle="No analytics pipeline is connected yet."
           title="Performance Curve"
         >
           <p className="state-text">
-            Empty state: aggregate equity curve and drawdown overlays will appear
-            here.
+            This panel is intentionally kept as an empty-state preview for future
+            aggregate equity and drawdown overlays.
           </p>
         </Card>
 
         <Card
-          actions={<Badge variant="danger">Placeholder</Badge>}
+          actions={<Badge variant="danger">Preview</Badge>}
           subtitle="No risk anomalies detected in this mock view."
           title="Risk Feed"
         >
           <p className="state-text">
-            Error state example: data service unavailable. Retry controls can be
-            added in Step 2.
+            This panel demonstrates an error-state treatment for a future risk
+            service. Add retry controls when a real feed is connected.
           </p>
         </Card>
       </section>

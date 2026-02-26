@@ -1,6 +1,7 @@
 import { lazy, Suspense, type ReactElement } from 'react'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 import { AppLayout } from '../components/layout/AppLayout'
+import { RouteErrorPage } from './RouteErrorPage'
 import { RouteLoadingState } from './RouteLoadingState'
 
 const DashboardPage = lazy(() =>
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
+    errorElement: <RouteErrorPage />,
     children: [
       {
         index: true,

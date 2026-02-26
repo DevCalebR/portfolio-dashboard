@@ -72,6 +72,8 @@ export function RunDetailPage() {
   }, [id])
 
   useEffect(() => {
+    // This loader intentionally sets local loading/error state before awaiting the mock API.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadRun()
   }, [loadRun])
 

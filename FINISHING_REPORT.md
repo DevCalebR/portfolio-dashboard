@@ -462,7 +462,8 @@ Non-blocking quality issues:
 
 ## Changes Made by Codex
 
-Planned entries will be appended here after each commit/push (commit hash + summary).
+- `f338347` - Added the initial audit report scaffold with repo inventory, architecture map, verification results, quality findings, scorecard, and MVP scope.
+- Pending current change set: quick-win code and UX polish updates (will append hash after commit/push).
 
 ## Final Verification (To Be Updated After Fixes)
 
@@ -473,4 +474,3 @@ Pending.
 - `git status -sb`: Pending
 - `git log --oneline --decorate -n 20`: Pending
 - Branch sync with origin: Pending
-

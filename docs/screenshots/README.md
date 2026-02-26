@@ -1,14 +1,18 @@
-# Screenshot TODOs
+# Screenshot Notes
 
-Screenshots are intentionally placeholder-only until local capture is performed.
+This folder stores the screenshots used by the root `README.md`.
 
-Expected image files in this folder:
-- `runs-table.png`
-- `new-run-form.png`
-- `run-detail-charts.png`
-- `dashboard.png` (optional)
+Current README image filenames:
 
-## Suggested capture steps
+- `runs.png`
+- `new-run.png`
+- `run-detail.png`
+
+Optional additional screenshot:
+
+- `dashboard.png`
+
+## Re-capture Steps
 
 1. Run `npm run dev`.
 2. Open these routes in a browser:
@@ -16,6 +20,6 @@ Expected image files in this folder:
    - `/runs/new`
    - `/runs/RUN-101`
    - `/dashboard` (optional)
-3. Capture viewport screenshots at desktop width (~1440px).
-4. Save images in this folder using the expected names.
-5. Update README image section if you want inline embeds.
+3. Capture desktop-width screenshots (~1440px viewport).
+4. Save files in this folder using the filenames above.
+5. Update `README.md` image references if you rename any files.
