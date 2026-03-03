@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { appConfig } from '../../config/appConfig'
 
 const navItems = [
   { end: true, label: 'Dashboard', to: '/dashboard' },
@@ -10,10 +11,10 @@ export function SideNav() {
   return (
     <div className="side-nav">
       <div className="side-nav__brand">
-        <span className="side-nav__brand-mark">PD</span>
+        <span className="side-nav__brand-mark">{appConfig.mark}</span>
         <div>
-          <p className="side-nav__brand-title">Portfolio Dashboard</p>
-          <p className="side-nav__brand-subtitle">Backtest Workspace</p>
+          <p className="side-nav__brand-title">{appConfig.name}</p>
+          <p className="side-nav__brand-subtitle">{appConfig.subtitle}</p>
         </div>
       </div>
       <nav aria-label="Primary">

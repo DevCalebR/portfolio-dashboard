@@ -272,6 +272,7 @@ export function RunsPage() {
     [setTableQueryState, sortingState, tableQueryState],
   )
 
+  // eslint-disable-next-line react-hooks/incompatible-library -- TanStack's table instance intentionally returns non-memoizable functions.
   const table = useReactTable({
     columns,
     data: result.items,
