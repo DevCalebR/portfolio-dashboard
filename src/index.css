@@ -85,6 +85,29 @@ code {
   padding: 1.4rem;
 }
 
+.app-shell__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.8rem;
+  padding: 0.6rem 1.4rem 0.9rem;
+  border-top: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.app-shell__footer a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.app-shell__footer a:hover {
+  color: var(--text-primary);
+}
+
 .side-nav {
   display: flex;
   flex-direction: column;

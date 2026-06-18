@@ -5,10 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "tsc -b && vite build",
     "test": "node scripts/run-tests.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
+    "install:deps": "npm ci",
+    "setup:env": "node scripts/setup-env.mjs",
+    "setup": "npm run install:deps && npm run setup:env",
+    "deploy:check": "npm run lint && npm run typecheck && npm test && npm run build && npm run smoke",
     "preview": "vite preview"
   },
   "dependencies": {

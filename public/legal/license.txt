@@ -1,0 +1,23 @@
+Relay Works Template License v1.0
+
+Copyright (c) 2026 Relay Works
+
+Permission is granted to a lawful purchaser of this template to:
+- use the template for one commercial or internal project,
+- modify the source code for that project,
+- deploy derivative works for that project.
+
+Without prior written permission from Relay Works, you may not:
+- resell, redistribute, sublicense, or repackage this template,
+- share source files publicly as a competing template product,
+- include this template in another paid starter kit or boilerplate.
+
+This license applies only to original template code in this repository. Third-party
+libraries and assets remain under their own licenses.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

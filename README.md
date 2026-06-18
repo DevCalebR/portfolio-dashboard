@@ -1,140 +1,132 @@
-# Portfolio Dashboard
+# Portfolio Dashboard Template
 
-Live Demo: https://portfoliodashboardproject.netlify.app
-GitHub: https://github.com/DevCalebR/portfolio-dashboard
+Portfolio Dashboard is a production-ready Vite + React + TypeScript template for backtest research workflows. It includes URL-synced run exploration, validated run creation, and chart-based run detail pages.
 
-Project summary: Portfolio Dashboard is a Vite + React + TypeScript SPA for backtest research workflows. It combines URL-synced run exploration, validated run creation, and chart-based run analysis in a clean, accessible interface.
+## Features
 
-## Key Features
-
-- URL-synced runs table state with global search, status filter, sorting, and pagination.
-- Interactive runs workflow with loading, empty, and error states plus retry handling.
-- Validated New Run form using React Hook Form + Zod, including reusable presets.
-- Run detail metrics with lazily loaded chart components for code-split performance.
-- Accessibility improvements including visible focus states and keyboard-friendly navigation.
-- Lightweight Node-based tests and production build checks via `npm test` and `npm run build`.
+- URL-synced runs table state for query, status, sorting, and pagination.
+- New Run flow with `react-hook-form` + `zod` validation and presets.
+- Run detail metrics with lazy-loaded chart modules.
+- Accessible keyboard navigation and visible focus states.
+- Built-in CI-friendly checks: lint, typecheck, tests, build, and smoke test.
+- Starter branding via `.env.local` for name/tagline/title customization.
 
 ## Screenshots
 
-### Runs Table
-
 ![Runs table](docs/screenshots/runs.png)
-
-### New Run Form
-
 ![New run form](docs/screenshots/new-run.png)
-
-### Run Detail
-
 ![Run detail charts](docs/screenshots/run-detail.png)
 
-## Tech Stack
+## Quickstart
 
-- Vite
-- React
-- TypeScript
-- TanStack Table
-- React Hook Form
-- Zod
-- Recharts
-- React Router
+### Prerequisites
 
-## Getting Started
+- Node.js 20+
+- npm 10+
 
-### 1. Install
+### 1. Install dependencies + generate starter config
 
 ```bash
-npm install
+npm run setup
 ```
 
-### 2. Run dev server
+This runs `npm ci` and creates `.env.local` from `.env.example` if it does not already exist.
+
+### 2. Customize starter configuration
+
+Edit `.env.local` values (app name, subtitle, nav label, title suffix, description).
+
+### 3. Run locally
 
 ```bash
 npm run dev
 ```
 
-### 3. Build
+### 4. Run release checks
 
 ```bash
-npm run build
+npm run deploy:check
 ```
 
-### 4. Run quality checks
+## Deploy Guide
 
-```bash
-npm run lint
-npm run typecheck
-npm test
-```
+### Netlify
 
-## Deploy to Netlify
-
-Use these Netlify settings:
+Use:
 - Build command: `npm run build`
 - Publish directory: `dist`
-- Node version: `20+`
+- Node version: `20`
 
-SPA routing is configured via `public/_redirects` with:
+SPA routing is handled by `public/_redirects`:
 
 ```text
 /* /index.html 200
 ```
 
-That file is copied into `dist/_redirects` during build so direct route visits (for example `/runs/123`) resolve correctly on Netlify.
+### Optional hosted demo workflow
+
+1. Run `npm run deploy:check` locally.
+2. Push to your own Git provider repo.
+3. Connect repo in Netlify and deploy with the settings above.
+4. Share the deployed URL as your product demo.
+
+## Scripts
+
+- `npm run setup`: install deps and scaffold `.env.local`.
+- `npm run dev`: run local dev server.
+- `npm run lint`: ESLint checks.
+- `npm run typecheck`: TypeScript checks.
+- `npm test`: lightweight behavior tests for query state + mock API.
+- `npm run build`: production build.
+- `npm run smoke`: checks required files in `dist/` after build.
+- `npm run deploy:check`: full pre-deploy verification pipeline.
+
+## Starter Configuration Reference
+
+See `.env.example` for descriptions. Keys:
+- `VITE_APP_NAME`
+- `VITE_APP_SUBTITLE`
+- `VITE_APP_NAV_LABEL`
+- `VITE_APP_PRIMARY_ACTION_LABEL`
+- `VITE_APP_MARK`
+- `VITE_APP_TITLE_SUFFIX`
+- `VITE_APP_DESCRIPTION`
+
+## FAQ
+
+### Does this template include a backend?
+
+No. It ships with a mock API layer in `src/features/runs/mockApi.ts`.
+
+### Can I replace the mock data with my own API?
+
+Yes. Keep the page-level contracts and swap the mock API functions with your service client.
+
+### Is this suitable for a paid product template?
+
+Yes. The repository includes licensing files, setup flow, screenshots, and deploy guidance.
+
+### How do I validate a release quickly?
+
+Run `npm run deploy:check` before publishing a demo or distributing the template.
 
 ## Project Structure
 
 ```text
 src/
   app/
-    router.tsx
-    RouteLoadingState.tsx
   components/
-    layout/
-      AppLayout.tsx
-      SideNav.tsx
-      TopNav.tsx
-    ui/
-      Badge.tsx
-      Button.tsx
-      Card.tsx
-      Input.tsx
-      Select.tsx
+  config/
   features/
-    runs/
-      components/
-        RunDetailCharts.tsx
-      mockApi.ts
-      mockData.ts
-      queryState.ts
-      types.ts
   lib/
-    format.ts
   pages/
-    DashboardPage.tsx
-    RunsPage.tsx
-    NewRunPage.tsx
-    RunDetailPage.tsx
-    NotFoundPage.tsx
 scripts/
-  run-tests.mjs
 docs/
   screenshots/
 ```
 
-## Testing Notes
+## License and Terms
 
-`npm test` runs a lightweight Node script (no extra test framework) that validates:
-- `listRuns` filtering/sorting/pagination behavior.
-- URL query parsing sanitizes invalid params to defaults.
-
-## Performance Notes
-
-Route-level lazy loading is enabled and the heavy run-detail chart module is split into its own chunk.
-
-## Roadmap
-
-- Server/API integration for runs and analytics.
-- Debounced search and richer column filters.
-- More chart drill-downs and benchmark overlays.
-- End-to-end tests for critical flows.
+- License: [LICENSE](LICENSE)
+- Usage terms: [TEMPLATE_USAGE_TERMS.md](TEMPLATE_USAGE_TERMS.md)
+- In-app links: footer `Legal` links open hosted copies at `/legal/license.txt` and `/legal/template-usage-terms.txt`.
