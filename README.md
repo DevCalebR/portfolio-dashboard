@@ -1,132 +1,99 @@
-# Portfolio Dashboard Template
+# Portfolio Dashboard
 
-Portfolio Dashboard is a production-ready Vite + React + TypeScript template for backtest research workflows. It includes URL-synced run exploration, validated run creation, and chart-based run detail pages.
+A responsive React and TypeScript frontend for browsing synthetic backtest runs, configuring new runs, and reviewing metrics and charts through a local mock data layer.
 
-## Features
+> Portfolio status: frontend demonstration. The repository does not include a live trading system, broker integration, analytics backend, authentication, or persistent database.
 
-- URL-synced runs table state for query, status, sorting, and pagination.
-- New Run flow with `react-hook-form` + `zod` validation and presets.
-- Run detail metrics with lazy-loaded chart modules.
-- Accessible keyboard navigation and visible focus states.
-- Built-in CI-friendly checks: lint, typecheck, tests, build, and smoke test.
-- Starter branding via `.env.local` for name/tagline/title customization.
+## What it demonstrates
+
+- URL-synchronized search, status, sorting, and pagination state
+- Responsive run table built with TanStack Table
+- Validated run-configuration flow using React Hook Form and Zod
+- Run detail pages with lazy-loaded Recharts visualizations
+- Accessible keyboard navigation, visible focus states, and route-level error handling
+- Typed mock-service boundaries that can be replaced by a real API client
+- CI-friendly lint, typecheck, test, build, and smoke commands
 
 ## Screenshots
 
-![Runs table](docs/screenshots/runs.png)
-![New run form](docs/screenshots/new-run.png)
-![Run detail charts](docs/screenshots/run-detail.png)
+| Run tracking | Run configuration |
+| --- | --- |
+| ![Synthetic backtest runs table](docs/screenshots/runs.png) | ![Validated new-run form](docs/screenshots/new-run.png) |
 
-## Quickstart
+![Synthetic run metrics and charts](docs/screenshots/run-detail.png)
 
-### Prerequisites
+All values and charts shown in these captures are synthetic. New runs exist only for the current browser session.
 
-- Node.js 20+
-- npm 10+
+## Technology stack
 
-### 1. Install dependencies + generate starter config
+- React 19 and TypeScript
+- Vite
+- React Router
+- TanStack Table
+- React Hook Form and Zod
+- Recharts
+- ESLint and lightweight Node-based behavior tests
 
-```bash
-npm run setup
+## Architecture
+
+```mermaid
+flowchart LR
+    U[Browser routes] --> P[Dashboard and run pages]
+    P --> F[Typed feature modules]
+    F --> M[Local mock API]
+    M --> D[Synthetic run data]
+    F --> C[Table, form, and chart components]
 ```
 
-This runs `npm ci` and creates `.env.local` from `.env.example` if it does not already exist.
+The page-level interfaces depend on typed feature contracts rather than importing fixture data directly. A real backend can replace the mock API while preserving the existing route and component boundaries.
 
-### 2. Customize starter configuration
+## Run locally
 
-Edit `.env.local` values (app name, subtitle, nav label, title suffix, description).
-
-### 3. Run locally
+Prerequisites: Node.js 20+ and npm 10+.
 
 ```bash
+git clone https://github.com/DevCalebR/portfolio-dashboard.git
+cd portfolio-dashboard
+npm ci
+cp .env.example .env.local
 npm run dev
 ```
 
-### 4. Run release checks
+The environment file controls display branding only; no secrets or provider credentials are required.
+
+## Validation
+
+Run the complete release check:
 
 ```bash
 npm run deploy:check
 ```
 
-## Deploy Guide
+This executes lint, TypeScript checks, behavior tests, the production build, and a generated-output smoke test.
 
-### Netlify
-
-Use:
-- Build command: `npm run build`
-- Publish directory: `dist`
-- Node version: `20`
-
-SPA routing is handled by `public/_redirects`:
+## Project structure
 
 ```text
-/* /index.html 200
+src/app/              Router loading and error states
+src/components/       Shared presentation components
+src/config/           Display configuration
+src/features/runs/    Run contracts, mock service, table, forms, and charts
+src/pages/            Dashboard, list, creation, and detail routes
+docs/screenshots/     Authentic local application captures
+scripts/              Test, setup, and build-output smoke checks
 ```
 
-### Optional hosted demo workflow
+## Known limitations
 
-1. Run `npm run deploy:check` locally.
-2. Push to your own Git provider repo.
-3. Connect repo in Netlify and deploy with the settings above.
-4. Share the deployed URL as your product demo.
+- The mock API does not persist data across browser sessions.
+- Charts and performance values are synthetic and are not financial results.
+- There is no live broker, market-data feed, job runner, backend API, database, or authentication.
+- The previously published demo URL is unavailable; evaluate the project locally from this repository.
 
-## Scripts
+## License and terms
 
-- `npm run setup`: install deps and scaffold `.env.local`.
-- `npm run dev`: run local dev server.
-- `npm run lint`: ESLint checks.
-- `npm run typecheck`: TypeScript checks.
-- `npm test`: lightweight behavior tests for query state + mock API.
-- `npm run build`: production build.
-- `npm run smoke`: checks required files in `dist/` after build.
-- `npm run deploy:check`: full pre-deploy verification pipeline.
+See [LICENSE](LICENSE) and [TEMPLATE_USAGE_TERMS.md](TEMPLATE_USAGE_TERMS.md). Repository availability does not imply that performance claims or financial advice are being offered.
 
-## Starter Configuration Reference
+## Related work
 
-See `.env.example` for descriptions. Keys:
-- `VITE_APP_NAME`
-- `VITE_APP_SUBTITLE`
-- `VITE_APP_NAV_LABEL`
-- `VITE_APP_PRIMARY_ACTION_LABEL`
-- `VITE_APP_MARK`
-- `VITE_APP_TITLE_SUFFIX`
-- `VITE_APP_DESCRIPTION`
-
-## FAQ
-
-### Does this template include a backend?
-
-No. It ships with a mock API layer in `src/features/runs/mockApi.ts`.
-
-### Can I replace the mock data with my own API?
-
-Yes. Keep the page-level contracts and swap the mock API functions with your service client.
-
-### Is this suitable for a paid product template?
-
-Yes. The repository includes licensing files, setup flow, screenshots, and deploy guidance.
-
-### How do I validate a release quickly?
-
-Run `npm run deploy:check` before publishing a demo or distributing the template.
-
-## Project Structure
-
-```text
-src/
-  app/
-  components/
-  config/
-  features/
-  lib/
-  pages/
-scripts/
-docs/
-  screenshots/
-```
-
-## License and Terms
-
-- License: [LICENSE](LICENSE)
-- Usage terms: [TEMPLATE_USAGE_TERMS.md](TEMPLATE_USAGE_TERMS.md)
-- In-app links: footer `Legal` links open hosted copies at `/legal/license.txt` and `/legal/template-usage-terms.txt`.
+Review more API integration, automation, and dashboard projects on the [DevCalebR GitHub profile](https://github.com/DevCalebR) or the [RelayWorks portfolio](https://getrelayworks.com/work/).

@@ -12,7 +12,7 @@ Audit target: sell this repository as a one-time purchase template/app, where bu
 - Overall readiness: **Conditional Go**
 - Reason: core template packaging blockers were fixed in this pass, with one remaining business/legal sign-off item.
 
-## 1) Production-Ready Template Verification
+## 1) Release-Readiness Verification
 
 ### README with quickstart + deploy
 
